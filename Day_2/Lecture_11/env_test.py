@@ -1,4 +1,3 @@
-import numpy as np
 import gym
 
 env = gym.make('CartPole-v1')

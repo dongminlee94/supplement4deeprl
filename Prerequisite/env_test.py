@@ -1,6 +1,22 @@
+##################################
+##### 1. Check numpy, torch  #####
+##################################
+
+import numpy
+import torch
+
+print('numpy' + numpy.__version__)
+print('torch' + torch.__version__)
+
+##################################################################
+
+########################
+##### 2. Check gym #####
+########################
+
 import gym
 
-env = gym.make('FrozenLake-v0')
+env = gym.make('CartPole-v1')
 
 for episode in range(10000):
     done = False

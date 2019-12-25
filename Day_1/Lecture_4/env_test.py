@@ -2,17 +2,19 @@ import gym
 
 env = gym.make('FrozenLake-v0')
 
-for episode in range(10000):
+for episode in range(1):
     done = False
     obs = env.reset()
+    
+    env.render()
+    print('\n')
 
     while not done:
-        env.render()
-
         action = env.action_space.sample()
         next_obs, reward, done, _ = env.step(action)
 
-        print('observation: {} | action: {} | reward: {} | next_observation: {} | done: {}'.format(
+        env.render()
+        print('observation: {} | action: {} | reward: {} | next_observation: {} | done: {}\n'.format(
                 obs, action, reward, next_obs, done))
         
         obs = next_obs

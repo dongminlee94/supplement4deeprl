@@ -26,7 +26,7 @@ class DynamicProgramming(object):
    def policy_evaluation(self, pi_table):
       # Initialize value table
       v_table = np.random.uniform(size=(self.obs_num, 1))
-      # Run iteration until value table converge
+      # Run while loop until value table converge
       while True:
          v_prime = np.zeros((self.obs_num, 1))
          for s in self.trans_probs.keys():
@@ -97,7 +97,7 @@ class DynamicProgramming(object):
          v_table = v_prime
          # If the distance between value table and value prime is not smaller than epsilon, reiterate loop
          if distance < self.epsilon:
-                break
+            break
          iterations += 1
          
          print('---------------------------------------')

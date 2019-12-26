@@ -20,8 +20,8 @@ class DynamicProgramming(object):
       self.gamma = gamma
       self.epsilon = epsilon
 
-      # State transition probabilities P(s'|s,a)
-      self.trans_probs = self.env.unwrapped.P
+      # Dynamics
+      self.dynamics = self.env.unwrapped.P
 
    def policy_evaluation(self, pi_table):
       # Initialize value table
@@ -29,9 +29,9 @@ class DynamicProgramming(object):
       # Run while loop until value table converge
       while True:
          v_prime = np.zeros((self.obs_num, 1))
-         for s in self.trans_probs.keys():
-            for a in self.trans_probs[s].keys():
-               for trans_prob, next_obs, reward, done in self.trans_probs[s][a]:
+         for s in self.dynamics.keys():
+            for a in self.dynamics[s].keys():
+               for trans_prob, next_obs, reward, done in self.dynamics[s][a]:
                   v_prime[s][0] += pi_table[s][a]*trans_prob*(reward + self.gamma*v_table[next_obs])
          distance = np.max(np.abs(v_table-v_prime))
          v_table = v_prime
@@ -45,9 +45,9 @@ class DynamicProgramming(object):
       q_table = np.zeros((self.obs_num, self.act_num))
       pi_prime = np.zeros((self.obs_num, self.act_num))
       # Update Q-function table through policy improvement
-      for s in self.trans_probs.keys():
-         for a in self.trans_probs[s].keys():
-            for trans_prob, next_obs, reward, done in self.trans_probs[s][a]:
+      for s in self.dynamics.keys():
+         for a in self.dynamics[s].keys():
+            for trans_prob, next_obs, reward, done in self.dynamics[s][a]:
                q_table[s][a] += trans_prob*(reward + self.gamma*v_table[next_obs])
       # Update policy table from the action with highest Q-value as 1 at the current state
       pi_prime[np.arange(self.obs_num), np.argmax(q_table, axis=1)] = 1
@@ -86,9 +86,9 @@ class DynamicProgramming(object):
       # Run value iteration until value table converge
       while True:
          q_table = np.zeros((self.obs_num, self.act_num))
-         for s in self.trans_probs.keys():
-            for a in self.trans_probs[s].keys():
-               for trans_prob, next_obs, reward, done in self.trans_probs[s][a]:
+         for s in self.dynamics.keys():
+            for a in self.dynamics[s].keys():
+               for trans_prob, next_obs, reward, done in self.dynamics[s][a]:
                   q_table[s][a] += trans_prob*(reward + self.gamma*v_table[next_obs])
          # Update value prime from the highest Q-value at the Q-function table
          v_prime = np.max(q_table, axis=1)

@@ -72,7 +72,7 @@ class Agent(object):
 if __name__ == "__main__":
    # Configurations
    parser = argparse.ArgumentParser(description='Traditional RL algorithms in FrozenLake environment')
-   parser.add_argument('--algo', type=str, default='q-learning', 
+   parser.add_argument('--algo', type=str, default='sarsa', 
                         help='select an algorithm among sarsa, q-learning')
    args = parser.parse_args()
 

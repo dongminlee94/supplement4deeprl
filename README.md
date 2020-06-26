@@ -1,4 +1,4 @@
-# Supplementary Material
+# Supplementary Material for Deep RL with PyTorch
 
 멀티캠퍼스에서 진행되는 "[PyTorch로 배우는 강화학습](https://www.multicampus.com/em/enrolment/courseDetai?p_menu=NzUjU1VC&p_gubun=Qw==&corsCd=FA001B&corsYr=2020&corsDgrCd=10109)" 강의에 대한 추가자료입니다.
 

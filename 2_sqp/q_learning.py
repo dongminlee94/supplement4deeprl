@@ -13,7 +13,7 @@ class Agent(object):
                 act_num,
                 steps=0,
                 gamma=0.99,
-                epsilon=0.2,
+                epsilon=0.3,
                 lr=0.01,
                 test_mode=False,
    ):
@@ -114,7 +114,7 @@ if __name__ == "__main__":
    agent.test_mode = True
 
    # Perform the test phase -- no learning
-   for episode in range(100):
+   for episode in range(10):
       # Run one episode
       episode_return = agent.run()
       sum_returns += episode_return

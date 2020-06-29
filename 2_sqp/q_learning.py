@@ -77,7 +77,7 @@ if __name__ == "__main__":
    args = parser.parse_args()
 
    # Initialize environment
-   env = gym.make('FrozenLake-v0')
+   env = gym.make('FrozenLake-v0', is_slippery=False)
    obs_num = env.observation_space.n
    act_num = env.action_space.n
    print('State number:', obs_num)

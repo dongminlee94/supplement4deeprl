@@ -1,6 +1,6 @@
 import gym
 
-env = gym.make('FrozenLake-v0')
+env = gym.make('FrozenLake-v0', is_slippery=False)
 
 for episode in range(1):
     done = False

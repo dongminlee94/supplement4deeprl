@@ -31,8 +31,8 @@ class DynamicProgramming(object):
          v_prime = np.zeros((self.obs_num, 1))
          for s in self.dynamics.keys():
             for a in self.dynamics[s].keys():
-               for trans_prob, next_obs, reward, done in self.dynamics[s][a]:
-                  v_prime[s][0] += pi_table[s][a]*trans_prob*(reward + self.gamma*v_table[next_obs])
+               for _, next_obs, reward, done in self.dynamics[s][a]:
+                  v_prime[s][0] += pi_table[s][a]*(reward + self.gamma*v_table[next_obs])
          distance = np.max(np.abs(v_table-v_prime))
          v_table = v_prime
          # If the distance between value table and value prime is not smaller than epsilon, reiterate loop
@@ -47,8 +47,8 @@ class DynamicProgramming(object):
       # Update Q-function table through policy improvement
       for s in self.dynamics.keys():
          for a in self.dynamics[s].keys():
-            for trans_prob, next_obs, reward, done in self.dynamics[s][a]:
-               q_table[s][a] += trans_prob*(reward + self.gamma*v_table[next_obs])
+            for _, next_obs, reward, done in self.dynamics[s][a]:
+               q_table[s][a] += reward + self.gamma*v_table[next_obs]
       # Update policy table from the action with highest Q-value as 1 at the current state
       pi_prime[np.arange(self.obs_num), np.argmax(q_table, axis=1)] = 1
       return pi_prime
@@ -112,13 +112,15 @@ class DynamicProgramming(object):
    def run(self, pi_table):
       total_reward = 0.
 
-      obs = self.env.reset()
       done = False
+      obs = self.env.reset()
+      env.render()
 
       while not done:
          action = np.random.choice(self.act_num, 1, p=pi_table[obs][:])[0]
          next_obs, reward, done, _ = env.step(action)
          
+         env.render()
          total_reward += reward
          obs = next_obs
       return total_reward
@@ -146,11 +148,10 @@ if __name__ == "__main__":
       pi_table = dp.value_iteration(start_time)
 
    sum_returns = 0.
-   for episode in range(100):
-      episode_return = dp.run(pi_table)
-      sum_returns += episode_return
+   
+   episode_return = dp.run(pi_table)
+   sum_returns += episode_return
 
-   env.render()
    print('---------------------------------------')
    print('EpisodeReturn:', episode_return)
    print('SumReturns:', sum_returns)
